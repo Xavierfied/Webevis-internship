@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-FILE_PATH = "data/student_stats.csv"
+FILE_PATH = "Webevis-internship/student_performance_system/data/students_stats.csv"
 
 
 class SPMS:
@@ -142,7 +142,8 @@ class SPMS:
             max_score = self.df[sub].max()
             sub_toppers = self.df[self.df[sub] == max_score]
             names = ", ".join(sub_toppers['name'].tolist())
-            return f"{sub}: {names} ({max_score} marks)"
+
+        return f"{sub}: {names} ({max_score} marks)"
 
 ###############################################
 
@@ -190,19 +191,19 @@ while True:
         # add_student returns a string, so we print it
         print(rec.add_student())
     elif choice == '2':
-        rec.update_rec()
+        print(rec.update_rec())
     elif choice == '3':
-        rec.del_rec()
+        print(rec.del_rec())
     elif choice == '4':
-        rec.get_info()
+        print(rec.get_info())
     elif choice == '5':
-        rec.performance_analyzer()
+        print(rec.performance_analyzer())
     elif choice == '6':
-        rec.toppers()
+        print(rec.toppers())
     elif choice == '7':
-        rec.sub_toppers()
+        print(rec.sub_toppers())
     elif choice == '8':
-        rec.gen_rep()
+        print(rec.gen_rep())
     elif choice == '9':
         print("\nExiting the system. Goodbye!")
         break
