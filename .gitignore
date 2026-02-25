@@ -1,1 +1,5 @@
 .venv
+*.csv
+README.md
+employee_task_tracker
+student_performance_system/data
