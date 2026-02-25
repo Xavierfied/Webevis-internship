@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-FILE_PATH = "data/student_stats.csv"
+FILE_PATH = "Webevis-internship/student_performance_system/data/students_stats.csv"
 
 
 class SPMS:
