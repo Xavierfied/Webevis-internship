@@ -48,22 +48,23 @@ class SPMS:
 
             # self.df = self.df.set_index("id")
             self.df.loc[self.df["id"] == roll, ["id"]] = nroll
-            print("Roll-ID Updated Successfully")
-
             # self.df = self.df.reset_index()
+
+            return "Roll-ID Updated Successfully"
+
 
         elif item_update == "2":
             nname = str(input("Enter New Name to Update: "))
             self.df.loc[self.df["id"] == roll, ["name"]] = nname
-            print("Name Updated Successfully")
+            return "Name Updated Successfully"
 
         elif item_update == "3":
             subs = ["math", "english", "science", "history"]
             for sub in subs:
                 nmarks = int(input(f"Enter the Updated Marks for {sub}:"))
                 self.df.loc[self.df["id"] == roll, [sub]] = nmarks
-                print("Marks Updated Successfully")
 
+            return "Marks Updated Successfully"
 ###############################################
 
     def del_rec(self):
@@ -72,9 +73,9 @@ class SPMS:
         ###############################################
         try:
             self.df.drop(index=roll, inplace=True)
-            print(f"Student Record for the ID: {roll} has been successfully deleted!!")
+            return f"Student Record for the ID: {roll} has been successfully deleted!!"
         except ValueError:
-            print(f"Invalid ID Received!")
+            return f"Invalid ID Received!"
         finally:
             self.df = self.df.reset_index()
 
@@ -85,10 +86,9 @@ class SPMS:
         matches = self.df[self.df['name'].str.lower() == name]
         ###############################################
         if matches.empty:
-            print(f"No Matches Found")
-
+            return f"No Matches Found"
         else:
-            print(f"Records that were successfully found:\n{matches}")
+            f"Records that were successfully found:\n{matches}"
 
 ###############################################
 
@@ -107,7 +107,7 @@ class SPMS:
                 return 'Poor'
         ###############################################
         self.df["grade"] = self.df["average"].apply(give_grade)
-        print("Students Graded and overall avg score score updated in the main shet!!")
+        return "Students Graded and overall avg score score updated in the main shet!!"
 
 ###############################################
 
@@ -118,11 +118,19 @@ class SPMS:
         highest = self.df["average"].max()
         highest_toppers = self.df[self.df["average"] == highest]
         ###############################################
-        print(f"---> Highest Achivers:")
+        # print(f"---> Highest Achivers:")
+        subs_tops = []
+        i = 1
+
         for _, row in highest_toppers.iterrows():
-            i = 1
-            print(f'{i}-) {row["name"]} : \n----> ID : {row["id"]} \n---->Average Marks: {row["average"]}')
+            subs_tops.append(
+                f'{i}-) {row["name"]} : \n'
+                f'----> ID : {row["id"]} \n'
+                f'----> Average Marks: {row["average"]}'
+            )
             i += 1
+
+        return f"---> Highest Achivers:\n" + "\n".join(subs_tops)
 
 ###############################################
 
@@ -134,7 +142,7 @@ class SPMS:
             max_score = self.df[sub].max()
             sub_toppers = self.df[self.df[sub] == max_score]
             names = ", ".join(sub_toppers['name'].tolist())
-            print(f"{sub}: {names} ({max_score} marks)")
+            return f"{sub}: {names} ({max_score} marks)"
 
 ###############################################
 
@@ -147,13 +155,14 @@ class SPMS:
         report_df = self.df[['id', 'name', 'average', 'grade']]
 
         report_df.to_csv(output_filename, index=False)
-        self.df.to_csv("Students_Stats_Updated.csv")
-        print(f"\n✅ Report successfully saved to '{output_filename}'")
+        self.df.to_csv("Students_Stats_Updated.csv", index=False)
+        save_msg = f"\n Report successfully saved to '{output_filename}'\n"
 
-        print("\n================ FINAL REPORT ================")
-        print(report_df.to_string(index=False))
-        print("==============================================")
+        fin_report_msg1 = "\n================ FINAL REPORT ================"
+        # print(report_df.to_string(index=False))
+        # print("==============================================")
 
+        return f"{save_msg}\n\n{fin_report_msg1}\n{report_df.to_string(index=False)}\n{'='*47}"
 ###############################################
 
 # Initialize the system - Made with AI
