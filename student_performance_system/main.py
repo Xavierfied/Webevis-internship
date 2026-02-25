@@ -143,7 +143,7 @@ class SPMS:
             sub_toppers = self.df[self.df[sub] == max_score]
             names = ", ".join(sub_toppers['name'].tolist())
 
-        return f"{sub}: {names} ({max_score} marks)"
+            print(f"{sub}: {names} ({max_score} marks)")
 
 ###############################################
 
