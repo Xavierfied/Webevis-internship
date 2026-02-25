@@ -1,15 +1,13 @@
 import numpy as np
 import pandas as pd
 
-FILE_PATH = "D:/huh/students_stats.csv"
-
-DF = pd.read_csv(FILE_PATH)
+FILE_PATH = "data/student_stats.csv"
 
 
 class SPMS:
 
-    def __init__(self, df: pd.DataFrame):
-        self.df = df
+    def __init__(self, csv_file_path):
+        self.df = pd.read_csv(csv_file_path)
 
 ###############################################
 
@@ -45,8 +43,8 @@ class SPMS:
         if item_update == "1":
             nroll = str(input("Enter New ID to Update: "))
 
-            if roll in self.df["id"].values:
-                return "ID already available in the dataset!!"
+            if nroll in self.df["id"].values:
+                return "New ID already exists in the database! choose a unique ID to update."
 
             # self.df = self.df.set_index("id")
             self.df.loc[self.df["id"] == roll, ["id"]] = nroll
@@ -160,7 +158,7 @@ class SPMS:
 
 # Initialize the system - Made with AI
 
-rec = SPMS(DF)
+rec = SPMS(FILE_PATH)
 
 while True:
     print("\n" + "="*45)
