@@ -37,8 +37,7 @@ class SPMS:
         if roll not in self.df["id"].values:
             return "Invalid ID Entered"
         ###############################################
-        item_update = str(input(
-            "Enter Serial number of one of the following options to update: \n1- Update ID\n2- Update Name\n3- Update Marks:\n").strip(" "))
+        item_update = str(input("Enter Serial number of one of the following options to update: \n1- Update ID\n2- Update Name\n3- Update Marks:\n").strip(" "))
         ###############################################
         if item_update == "1":
             nroll = str(input("Enter New ID to Update: "))
@@ -88,7 +87,7 @@ class SPMS:
         if matches.empty:
             return f"No Matches Found"
         else:
-            f"Records that were successfully found:\n{matches}"
+            return f"Records that were successfully found:\n{matches}"
 
 ###############################################
 
