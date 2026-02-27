@@ -1,5 +1,5 @@
 .venv
-,idea
+.idea
 *.csv
 README.md
 employee_task_tracker
