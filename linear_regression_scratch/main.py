@@ -1,25 +1,34 @@
 import numpy as np
-import pandas as pd
-import math
+# import pandas as pd
+# import math
 
 
-class LINEAR_REGRESSION_SCRATCH:
-    def __init__(self, learning_rate, convergence_tool= 1e-6):
+class LinearRegressionScratch:
+    def __init__(self, learning_rate= 0.01, n_iters= 1000, convergence_tool= 1e-6):
         self.learning_rate = learning_rate
+        self.n_iters = n_iters
         self_convergence_tool = convergence_tool
         self.W = None
         self.b = None
 
 
-    def fit(self):
-        pass
+    def fit(self, X, y):
+        n_samples, n_features = X.shape
+        self.W = np.zeros(n_features)
+        self.b = 0
 
 
-    def standardize_data(self, X_train, X_test):
-        mean = np.mean(X_train, axis=0)
-        std = np. std(X_train, axis=0)
+        for _ in range(self.n_iters):
+            y_pred = np.dot(X, self.W) + self.b
+            error = y_pred - y
 
-        X_train = (X_train - mean) / std
-        X_test = (X_test - mean) / std
+            dw = (1/n_samples) * np.dot(X.T, error)
+            db = (1/n_samples) * np.sum(error)
 
-        return X_train, X_test
+            self.W = self.W - self.learning_rate * dw
+            self.b = self.b - self.learning_rate * db
+
+
+    def predict(self, X):
+        y_pred = np.dot(X, self.W) + self.b
+        return y_pred
