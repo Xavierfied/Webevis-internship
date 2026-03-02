@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 # import pandas as pd
 # import math
 
@@ -17,7 +18,6 @@ class LinearRegressionScratch:
         self.W = np.zeros(n_features)
         self.b = 0
 
-
         for _ in range(self.n_iters):
             y_pred = np.dot(X, self.W) + self.b
             error = y_pred - y
@@ -32,3 +32,9 @@ class LinearRegressionScratch:
     def predict(self, X):
         y_pred = np.dot(X, self.W) + self.b
         return y_pred
+
+
+    def mse(self, y_test, predictions):
+        return np.mean((y_test-predictions)**2)
+
+
