@@ -11,7 +11,6 @@ class LinearRegressionScratch:
         self.W = None
         self.b = None
 
-
     def fit(self, X, y):
         n_samples, n_features = X.shape
         self.W = np.zeros(n_features)
