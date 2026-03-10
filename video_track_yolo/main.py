@@ -26,18 +26,18 @@ class VOD:
         if not capt.isOpened():
             raise ValueError(f"Cannot open video: {video_path}")
 
-        width   = int(self.capt.get(cv.CAP_PROP_FRAME_WIDTH))
-        height  = int(self.capt.get(cv.CAP_PROP_FRAME_HEIGHT))
-        fps     = int(self.capt.get(cv.CAP_PROP_FPS))
-        fourcc = cv.VideoWriter.fourcc(*"mpv4")
-        out = cv.VideoWriter(self.output_path, fourcc, fps, (width, height))
+        width   = int(capt.get(cv.CAP_PROP_FRAME_WIDTH))
+        height  = int(capt.get(cv.CAP_PROP_FRAME_HEIGHT))
+        fps     = int(capt.get(cv.CAP_PROP_FPS))
+        fourcc  = cv.VideoWriter.fourcc(*"mp4v")
+        out     = cv.VideoWriter(self.output_path, fourcc, fps, (width, height))
 
         return capt, width, height, fps, fourcc, out
 
 
     def draw_bb(self, frame, result):
         for box in result.boxes:
-            x1, y1, x2, y2 = map(int, box.xyxy[0])
+            x1, y1, x2, y2 = [int(v) for v in box.xyxy[0]]
             conf  = float(box.conf[0])
             cls   = int(box.cls[0])
             label = self.weight.names[cls]
@@ -83,6 +83,7 @@ class VOD:
                     frame,
                     conf=self.conf,
                     persist=True,
+                    verbose=False
                 )
 
                 for result in results:
@@ -92,7 +93,7 @@ class VOD:
                 frame_count += 1
 
                 cv.imshow("VOD Tracking", frame)
-                if cv.waitKey(1) :
+                if cv.waitKey(1) & 0xFF == ord("q"):
                     break
 
         finally:
@@ -103,5 +104,5 @@ class VOD:
 
 
 if __name__ == "__main__":
-    vod = VOD(weight=WEIGHT, output_path="output.mp4", conf=0.4)
+    vod = VOD(weight=WEIGHT, output_path="Webevis-internship/video_track_yolo/data/processed/output2.mp4", conf=0.4)
     vod.process_vid(TRAIN_PATH)
