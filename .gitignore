@@ -5,3 +5,5 @@
 employee_task_tracker
 student_performance_system/data
 .idea/
+.myvenv/
+__pycache__/
