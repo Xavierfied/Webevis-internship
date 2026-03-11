@@ -1,17 +1,19 @@
-from sympy.codegen.ast import none
 from ultralytics import YOLO
 import cv2 as cv
+import numpy as np
 
 TEST_PATH = "Webevis-internship/video_track_yolo/data/test/test.mp4"
 TRAIN_PATH = "Webevis-internship/video_track_yolo/data/sample/video2.mp4"
 
 WEIGHT =  "weights/yolo26n.pt"
+WEIGHT2 =  "weights/yolo26n-seg.pt"
 #
 # model = WEIGHT
 #
 # results = model.track(source=TRAIN_PATH, show=True, conf=0.1)
 # cv.waitKey(0)
-
+################################################################################################################
+################################################################################################################
 
 class VOD:
     def __init__(self, weight, output_path, conf=0.5):
@@ -19,6 +21,7 @@ class VOD:
         self.conf = conf
         self.output_path = output_path
 
+################################################################################################################
 
     def vid_stat(self, video_path):
         capt = cv.VideoCapture(video_path)
@@ -34,7 +37,7 @@ class VOD:
 
         return capt, width, height, fps, fourcc, out
 
-
+################################################################################################################
     def draw_bb(self, frame, result):
         for box in result.boxes:
             x1, y1, x2, y2 = [int(v) for v in box.xyxy[0]]
@@ -43,7 +46,7 @@ class VOD:
             label = self.weight.names[cls]
 
             cv.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            text       = f"{label} {conf:.2f}"
+            text = f"{label} {conf:.2f}"
             (tw, th), _ = cv.getTextSize(text, cv.FONT_HERSHEY_SIMPLEX, 0.6, 2)
             cv.rectangle(frame, (x1, y1 - th - 8), (x1 + tw, y1), (0, 255, 0), -1)
 
@@ -65,6 +68,47 @@ class VOD:
 
         return frame
 
+################################################################################################################
+
+    def draw_seg(self, frame, result):
+
+        if result.masks is None:
+            return frame
+
+        overlay = frame.copy()
+
+        for i, mask_xy in enumerate(result.masks.xy):
+            pts = mask_xy.astype(np.int32).reshape((-1, 1, 2))
+
+            cv.fillPoly(overlay, [pts], color=(0, 255, 0))
+            cv.polylines(frame, [pts], isClosed=True, color=(0, 255, 0), thickness=2)
+
+            box = result.boxes[i]
+            conf = float(box.conf[0])
+            cls = int(box.cls[0])
+            label = self.weight.names[cls]
+
+            x1, y1 = int(box.xyxy[0][0]), int(box.xyxy[0][1])
+            x2, y2 = int(box.xyxy[0][2]), int(box.xyxy[0][3])
+
+            text = f"{label} {conf:.2f}"
+
+            (tw, th), _ = cv.getTextSize(text, cv.FONT_HERSHEY_SIMPLEX, 0.6, 2)
+            cv.rectangle(frame, (x1, y1 - th - 8), (x1 + tw, y1), (0, 255, 0), -1)
+            cv.putText(frame, text, (x1, y1 - 4), cv.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2)
+
+            # track ID if available
+            if box.id is not None:
+                track_id = int(box.id[0])
+                cv.putText(frame, f"ID:{track_id}", (x1, y2 + 20),
+                           cv.FONT_HERSHEY_SIMPLEX, 0.55, (255, 100, 0), 2)
+
+            # blend overlay (filled polygons) onto frame with 40% opacity
+        cv.addWeighted(overlay, 0.4, frame, 0.6, 0, frame)
+
+        return frame
+
+################################################################################################################
 
     def process_vid(self, input_path):
         cap, width, height, fps, fourcc, out = self.vid_stat(input_path)
@@ -87,7 +131,7 @@ class VOD:
                 )
 
                 for result in results:
-                    frame = self.draw_bb(frame, result)
+                    frame = self.draw_seg(frame, result)
 
                 out.write(frame)
                 frame_count += 1
@@ -102,7 +146,9 @@ class VOD:
             cv.destroyAllWindows()
             print(f"Output saved to: {self.output_path}")
 
+################################################################################################################
+################################################################################################################
 
 if __name__ == "__main__":
-    vod = VOD(weight=WEIGHT, output_path="Webevis-internship/video_track_yolo/data/processed/output2.mp4", conf=0.4)
-    vod.process_vid(TRAIN_PATH)
+    vod = VOD(weight=WEIGHT2, output_path="Webevis-internship/video_track_yolo/data/processed/output2.mp4", conf=0.4)
+    vod.process_vid(TEST_PATH)
