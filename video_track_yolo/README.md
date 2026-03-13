@@ -41,3 +41,5 @@ pip install ultralytics opencv-python
 ```
 python ".\Webevis-internship\video_track_yolo\main.py"
 ```
+## Change Mode
+Change the function in __main__ to switch between segmentation and object detection.

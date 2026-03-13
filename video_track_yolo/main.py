@@ -5,13 +5,11 @@ import numpy as np
 TEST_PATH = "Webevis-internship/video_track_yolo/data/test/test.mp4"
 TRAIN_PATH = "Webevis-internship/video_track_yolo/data/sample/video2.mp4"
 
-WEIGHT =  "weights/yolo26n.pt"
-WEIGHT2 =  "weights/yolo26n-seg.pt"
-#
-# model = WEIGHT
-#
-# results = model.track(source=TRAIN_PATH, show=True, conf=0.1)
-# cv.waitKey(0)
+WEIGHT =  "Webevis-internship/video_track_yolo/weights/yolo26n.pt"
+WEIGHT2 =  "Webevis-internship/video_track_yolo/weights/yolo26n-seg.pt"
+WEIGHT_POSE =  "Webevis-internship/video_track_yolo/weights/yolo26s-pose.pt"
+
+
 ################################################################################################################
 ################################################################################################################
 
@@ -91,18 +89,31 @@ class VOD:
             x1, y1 = int(box.xyxy[0][0]), int(box.xyxy[0][1])
 
             text = f"{label} {conf:.2f}"
-
-            (tw, th), _ = cv.getTextSize(text, cv.FONT_HERSHEY_SIMPLEX, 0.6, 2)
-            cv.rectangle(frame, (x1, y1 - th - 8), (x1 + tw, y1), (0, 255, 0), -1)
-            cv.putText(frame, text, (x1, y1 - 4), cv.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2)
-
+            cv.putText(frame, text, (x1, y1 - 5), cv.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
 
         cv.addWeighted(overlay, 0.4, frame, 0.6, 0, frame)
 
         return frame
 
 ################################################################################################################
+    def draw_pose(self, frame, result):
+        if result.keypoints is None:
+            return frame
 
+        # loop over each detected person
+        for i, kps in enumerate(result.keypoints.xy):
+            # kps is shape (17, 2) — 17 keypoints, each with x and y
+            conf_scores = result.keypoints.conf[i]   # confidence per keypoint
+
+            # ── draw skeleton lines ─────────────────────────────────────
+            for j, (a, b) in enumerate(SKELETON):
+                # only draw if both keypoints were actually detected
+                if conf_scores[a] > 0.5 and conf_scores[b] > 0.5:
+                    x1, y1 = int(kps[a][0]), int(kps[a][1])
+                    x2, y2 = int(kps[b][0]), int(kps[b][1])
+
+                    cv.line(frame, (x1, y1), (x2, y2), SKELETON_COLORS[j], 2)
+################################################################################################################
     def process_vid(self, input_path):
         cap, width, height, fps, fourcc, out = self.vid_stat(input_path)
 
@@ -142,6 +153,6 @@ class VOD:
 ################################################################################################################
 ################################################################################################################
 
-if __name__ == "__main__":
-    vod = VOD(weight=WEIGHT2, output_path="Webevis-internship/video_track_yolo/data/processed/output2.mp4", conf=0.5)
-    vod.process_vid(TEST_PATH)
+# if __name__ == "__main__":
+#     vod = VOD(weight=WEIGHT2, output_path="Webevis-internship/video_track_yolo/data/processed/output2.mp4", conf=0.5)
+#     vod.process_vid(TEST_PATH)
