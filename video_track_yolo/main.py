@@ -5,8 +5,8 @@ import numpy as np
 TEST_PATH = "Webevis-internship/video_track_yolo/data/test/test.mp4"
 TRAIN_PATH = "Webevis-internship/video_track_yolo/data/sample/video2.mp4"
 
-WEIGHT =  "Webevis-internship/video_track_yolo/weights/yolo26n.pt"
-WEIGHT2 =  "Webevis-internship/video_track_yolo/weights/yolo26n-seg.pt"
+WEIGHT =  "weights/yolo26n.pt"
+WEIGHT2 =  "weights/yolo26n-seg.pt"
 WEIGHT_POSE =  "Webevis-internship/video_track_yolo/weights/yolo26s-pose.pt"
 
 
@@ -135,7 +135,7 @@ class VOD:
                 )
 
                 for result in results:
-                    frame = self.draw_seg(frame, result)
+                    frame = self.draw_seg(frame, result) # Change as needed
 
                 out.write(frame)
                 frame_count += 1
@@ -153,6 +153,6 @@ class VOD:
 ################################################################################################################
 ################################################################################################################
 
-# if __name__ == "__main__":
-#     vod = VOD(weight=WEIGHT2, output_path="Webevis-internship/video_track_yolo/data/processed/output2.mp4", conf=0.5)
-#     vod.process_vid(TEST_PATH)
+if __name__ == "__main__":
+    vod = VOD(weight=WEIGHT2, output_path="Webevis-internship/video_track_yolo/data/processed/output2.mp4", conf=0.5)
+    vod.process_vid(TEST_PATH)
