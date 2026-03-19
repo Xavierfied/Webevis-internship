@@ -14,7 +14,7 @@ results = model.predict(source=INPUT, conf=CONFIDENCE, device=0)
 
 for result in results:
     img_path = Path(result.path).name
-    annotated = result.plot()  # draws boxes + labels on the image
+    annotated = result.plot()
     cv2.imwrite(f"{OUTPUT_DIR}/{img_path}", annotated)
     print(f"✅ Saved: {OUTPUT_DIR}/{img_path}")
 

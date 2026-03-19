@@ -1,5 +1,5 @@
-train: D:\huh\Webevis-internship\yolo_train\dataset/images/train
-val:   D:\huh\Webevis-internship\yolo_train\dataset/images/val
+train: dataset/images/train
+val:   dataset/images/val
 
 nc: 2
 names: ['Female', 'Male']
