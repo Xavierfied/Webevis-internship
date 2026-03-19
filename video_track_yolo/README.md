@@ -38,8 +38,18 @@ pip install ultralytics opencv-python
 ```
 
 ## Run Script
+
+Change your Directory to "video_track_yolo" with following command:
 ```
-python ".\Webevis-internship\video_track_yolo\main.py"
+cd video_track_yolo
+```
+Then run the following command:
+```
+python main.py
 ```
 ## Change Mode
-Change the function in __main__ to switch between segmentation and object detection.
+Change the Tracking Mode you desire by changing the input in "main.py" Line:41, You may select between the following:
+```
+detection
+segmentation
+```
