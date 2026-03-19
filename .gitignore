@@ -15,3 +15,5 @@ __pycache__/
 *.png
 */predictions
 */runs
+*.pt
+weights
