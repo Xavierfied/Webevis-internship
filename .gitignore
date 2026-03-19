@@ -7,3 +7,13 @@ student_performance_system/data
 .idea/
 .myvenv/
 __pycache__/
+*/dataset/
+*.img
+*jpg
+*.jepg
+*/exported
+*.png
+*/predictions
+*/runs
+*.pt
+weights
