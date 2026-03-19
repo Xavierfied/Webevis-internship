@@ -2,9 +2,6 @@ from ultralytics import YOLO
 import cv2 as cv
 
 
-WEIGHT_BB   = "Webevis-internship/video_track_yolo/weights/yolo26n.pt"
-WEIGHT_POSE = "Webevis-internship/video_track_yolo/weights/yolo26n-seg.pt"
-
 
 def vid_stat(video_path, output_path):
     capt = cv.VideoCapture(video_path)
@@ -43,14 +40,14 @@ def get_stat_seg(weight, result, i):
     return x1, y1, conf, cls, label, box
 
 
-def get_stat_pose(model, result, i):
-    box = result.boxes[i]
-    conf = float(box.conf[0])
-    cls = int(box.cls[0])
-    label = model.names[cls]
-    x1, y1 = int(box.xyxy[0][0]), int(box.xyxy[0][1])
-    x2, y2 = int(box.xyxy[0][2]), int(box.xyxy[0][3])
-    kps = result.keypoints.xy[i]
-    conf_scores = result.keypoints.conf[i]
-
-    return x1, y1, x2, y2, conf, label, kps, conf_scores
+# def get_stat_pose(model, result, i):
+#     box = result.boxes[i]
+#     conf = float(box.conf[0])
+#     cls = int(box.cls[0])
+#     label = model.names[cls]
+#     x1, y1 = int(box.xyxy[0][0]), int(box.xyxy[0][1])
+#     x2, y2 = int(box.xyxy[0][2]), int(box.xyxy[0][3])
+#     kps = result.keypoints.xy[i]
+#     conf_scores = result.keypoints.conf[i]
+#
+#     return x1, y1, x2, y2, conf, label, kps, conf_scores

@@ -16,7 +16,7 @@ WEIGHTS = {
 DRIVE_IDS = {
     "detection":    "https://drive.google.com/file/d/1c4JfOZCgMKypjk5T7rZYDdhwEEKzhW-e/view?usp=sharing",
     "segmentation": "https://drive.google.com/file/d/1tzVzzU9Fj9iiR1FNX7ih7Qwud8lWIIqy/view?usp=drive_link",
-    "pose":         "your_google_drive_id_here"
+    "pose":         ""
 }
 
 ################################################################################################################
