@@ -44,7 +44,7 @@ class VOD:
                 )
 
                 for result in results:
-                    frame = self.draw_fn(frame, result, self.weight) # Change as needed
+                    frame = self.draw_fn(frame, result, self.weight)
 
                 out.write(frame)
                 frame_count += 1
