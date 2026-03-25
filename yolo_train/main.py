@@ -43,7 +43,7 @@ def prepare_dataset():
     copy_files(train_files, "train")
     copy_files(val_files,   "val")
 
-    print(f"✅ Dataset ready — Train: {len(train_files)} | Val: {len(val_files)}")
+    print(f" Dataset ready — Train: {len(train_files)} | Val: {len(val_files)}")
 
 
 
