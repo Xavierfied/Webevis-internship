@@ -2,7 +2,7 @@ from ultralytics import YOLO
 import cv2
 from pathlib import Path
 
-MODEL_PATH  = "runs/detect/male_female_detector2/weights/best.pt"
+MODEL_PATH  = "model/best.pt"
 INPUT       = "Which_friend_are_you.png"
 OUTPUT_DIR  = "predictions/"
 CONFIDENCE  = 0.1

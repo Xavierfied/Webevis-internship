@@ -15,6 +15,5 @@ __pycache__/
 *.png
 */predictions
 */runs
-*.pt
 *.mp4
 weights
