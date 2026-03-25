@@ -58,7 +58,7 @@ def train():
         name="male_female_detector",
         device=0
     )
-    print("✅ Training complete — best weights at: runs/detect/male_female_detector/weights/best.pt")
+    print("Training complete — best weights at: runs/detect/male_female_detector/weights/best.pt")
 
 
 if __name__ == "__main__":
