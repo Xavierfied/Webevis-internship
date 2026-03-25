@@ -4,13 +4,11 @@ import numpy as np
 
 from utils.obj_detector  import draw_bb
 from utils.segmenter     import draw_seg
-from utils.pose_profiler import draw_pose
 from utils.frame_stat import vid_stat
 
 MODES = {
     "detection":    draw_bb,
     "segmentation": draw_seg,
-    "pose":         draw_pose
 }
 
 ################################################################################################################
