@@ -3,14 +3,14 @@ import shutil
 import random
 from pathlib import Path
 from ultralytics import YOLO
-
-# ─── CONFIG ───────────────────────────────────────────────────────────────────
-BASE_DIR     = Path(__file__).parent.resolve()  # always points to yolo_train/
+######################################################################################################
+BASE_DIR     = Path(__file__).parent.resolve()  
 EXPORTED_DIR = BASE_DIR / "exported"
 DATASET_DIR  = BASE_DIR / "dataset"
 SPLIT_RATIO  = 0.8
 CLASSES      = ["Male", "Female"]
-# ──────────────────────────────────────────────────────────────────────────────
+
+######################################################################################################
 
 def prepare_dataset():
     src_images = Path(EXPORTED_DIR) / "images"
@@ -20,7 +20,6 @@ def prepare_dataset():
         (Path(DATASET_DIR) / "images" / split).mkdir(parents=True, exist_ok=True)
         (Path(DATASET_DIR) / "labels" / split).mkdir(parents=True, exist_ok=True)
 
-    # Collect all images that have a matching label file
     image_files = [
         f for f in src_images.iterdir()
         if f.suffix.lower() in [".jpg", ".jpeg", ".png"]
@@ -60,6 +59,7 @@ def train():
     )
     print("Training complete — best weights at: runs/detect/male_female_detector/weights/best.pt")
 
+######################################################################################################    
 
 if __name__ == "__main__":
     # prepare_dataset()
