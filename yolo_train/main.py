@@ -42,37 +42,25 @@ def prepare_dataset():
     copy_files(train_files, "train")
     copy_files(val_files,   "val")
 
-    print(f"✅ Dataset ready — Train: {len(train_files)} | Val: {len(val_files)}")
+    print(f" Dataset ready — Train: {len(train_files)} | Val: {len(val_files)}")
 
 
-def create_yaml():
-    dataset_abs = str(Path(DATASET_DIR).resolve())
-    yaml_content = f"""train: {dataset_abs}/images/train
-val:   {dataset_abs}/images/val
-
-nc: {len(CLASSES)}
-names: {CLASSES}
-"""
-    with open("data.yaml", "w") as f:
-        f.write(yaml_content)
-    print("✅ data.yaml created")
 
 
 def train():
-    model = YOLO("../weights/yolo26n.pt")  
+    model = YOLO("yolo26n.pt")
     model.train(
         data="data.yaml",
         epochs=50,
         imgsz=640,
         batch=8,
         name="male_female_detector",
-        device=0  
+        device=0
     )
-    print("✅ Training complete — best weights at: runs/detect/male_female_detector/weights/best.pt")
+    print("Training complete — best weights at: runs/detect/male_female_detector/weights/best.pt")
 
 ######################################################################################################    
 
 if __name__ == "__main__":
     # prepare_dataset()
-    # create_yaml()
     train()

@@ -4,13 +4,11 @@ import numpy as np
 
 from utils.obj_detector  import draw_bb
 from utils.segmenter     import draw_seg
-from utils.pose_profiler import draw_pose
 from utils.frame_stat import vid_stat
 
 MODES = {
     "detection":    draw_bb,
     "segmentation": draw_seg,
-    "pose":         draw_pose
 }
 
 ################################################################################################################
@@ -46,7 +44,7 @@ class VOD:
                 )
 
                 for result in results:
-                    frame = self.draw_fn(frame, result, self.weight) # Change as needed
+                    frame = self.draw_fn(frame, result, self.weight)
 
                 out.write(frame)
                 frame_count += 1
