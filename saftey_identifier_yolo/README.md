@@ -11,7 +11,7 @@ A YOLO-based safety detection system that identifies personal protective equipme
 - Supports images, video files, and webcam input
 - Saves processed results to output directory
 
-## Setup
+## Setup For PREDICTION
 
 1. **Clone the repository**
    ```bash
@@ -95,4 +95,20 @@ To review video based results, check out the before and after video under this l
 ```
 https://drive.google.com/drive/folders/1nElnO3NpckkNUBCmyAkScuWQDxpLz6zW?usp=sharing
 ```
+---
 
+## SETUP FOR TRAINING
+Upload the notebook in Google colab or kaggle according to your preference and simply run all the cells in order with your **"WandB"** API KEY.
+
+---
+
+## Stats of best.pt
+```
+Trained till 94 Epocs due to Early Stopping:
+
+- mAP@50        : 0.636
+- mAP@50-95     : 0.429
+- Precision     : 0.611
+- Recall        : 0.610
+
+```

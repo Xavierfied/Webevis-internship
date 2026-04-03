@@ -9,11 +9,11 @@ student_performance_system/data
 __pycache__/
 */dataset/
 *.img
-*jpg
+jpg
 *.jepg
 */exported
 *.png
 */predictions
 */runs
-*.mp4
+.mp4
 weights
